@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Million or Penny?</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --accent: #38bdf8;
+    --accent2: #a78bfa;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    height: 100vh;
+  }
+
+  .choice-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: flex 0.5s ease;
+    overflow: hidden;
+  }
+
+  .choice-container:hover {
+    flex: 1.2;
+  }
+
+  .choice {
+    text-align: center;
+    padding: 2rem;
+    max-width: 500px;
+    transition: transform 0.3s ease;
+  }
+
+  .choice h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .choice p {
+    font-size: 1rem;
+    color: var(--muted);
+  }
+
+  .left {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border-right: 2px solid var(--bg);
+  }
+
+  .right {
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  }
+
+  .dropdown {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--panel);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s ease, padding 0.6s ease;
+    padding: 0 2rem;
+  }
+
+  .dropdown.active {
+    max-height: 700px;
+    padding: 2rem;
+  }
+
+  .dropdown h2 {
+    margin-top: 0;
+    color: var(--accent);
+  }
+
+  .dropdown p {
+    line-height: 1.6;
+  }
+
+  .tax-toggle {
+    margin-top: 1rem;
+    background: var(--accent2);
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .tax-toggle:hover {
+    background: #7c3aed;
+  }
+
+  .tax-info {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #111827;
+    border-radius: 8px;
+    display: none;
+  }
+
+  .tax-info.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .simulation {
+    margin-top: 1rem;
+    background: #111827;
+    padding: 1rem;
+    border-radius: 8px;
+    display: none;
+  }
+
+  .simulation.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .progress-bar {
+    height: 20px;
+    background: var(--muted);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    border-radius: 10px;
+    transition: width 0.3s linear;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media(max-width: 768px) {
+    body { flex-direction: column; }
+    .choice-container { height: 50%; border: none; }
+    .left { border-bottom: 2px solid var(--bg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Million Choice -->
+<div class="choice-container left" onclick="showDropdown('million')">
+  <div class="choice">
+    <h1>$1,000,000 Today</h1>
+    <p>Instant wealth in your hands, no waiting.</p>
+  </div>
+  <div class="dropdown" id="million-dropdown">
+    <h2>You Chose $1,000,000 Today</h2>
+    <p>
+      Choosing $1,000,000 gives you immediate access to a life-changing sum.
+      Over 30 days, the doubling penny grows far beyond $1,000,000…
+    </p>
+    <button class="tax-toggle" onclick="toggleTax(event, 'million')">Show Tax Implications</button>
+    <div class="tax-info" id="million-tax">
+      <h3>Tax Implications</h3>
+      <p>
+        Treated as <strong>earned income</strong> (37% top federal bracket).  
+        Taxes: $370,000. Net: $630,000.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Penny Choice -->
+<div class="choice-container right" onclick="showDropdown('penny')">
+  <div class="choice">
+    <h1>$0.01 Doubled for 30 Days</h1>
+    <p>Patience pays. Watch compounding in action.</p>
+  </div>
+  <div class="dropdown" id="penny-dropdown">
+    <h2>You Chose the Doubling Penny</h2>
+    <p>
+      A single penny doubles each day. By day 10, it’s only $5.12.  
+      By day 20, $5,242.88. By day 30, $10,737,418.24.
+    </p>
+
+    <button class="tax-toggle" onclick="toggleTax(event, 'penny')">Show Tax Implications</button>
+    <div class="tax-info" id="penny-tax">
+      <h3>Tax Implications</h3>
+      <p>
+        Short-term gains (37%): $3,971,844. Net: $6,765,574.  
+        Long-term gains (20%): $2,147,483. Net: $8,589,935.
+      </p>
+    </div>
+
+    <!-- Simulation Panel -->
+    <div class="simulation" id="penny-sim">
+      <h3>Day-by-Day Growth Simulation</h3>
+      <p id="sim-value">Day 0: $0.01</p>
+      <div class="progress-bar">
+        <div class="progress-bar-inner" id="sim-progress"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showDropdown(choice) {
+  document.querySelectorAll('.dropdown').forEach(drop => drop.classList.remove('active'));
+  document.getElementById(choice + '-dropdown').classList.add('active');
+
+  // Run simulation only for penny
+  if (choice === 'penny') startSimulation();
+}
+
+function toggleTax(event, choice) {
+  event.stopPropagation();
+  const taxBox = document.getElementById(choice + '-tax');
+  taxBox.classList.toggle('active');
+}
+
+// Simulation for $0.01 doubling
+function startSimulation() {
+  const simPanel = document.getElementById('penny-sim');
+  simPanel.classList.add('active');
+
+  const simValue = document.getElementById('sim-value');
+  const simProgress = document.getElementById('sim-progress');
+  let value = 0.01;
+  let day = 0;
+  const totalDays = 30;
+
+  simValue.textContent = `Day 0: $0.01`;
+  simProgress.style.width = `0%`;
+
+  // Clear any existing intervals
+  if (window.simInterval) clearInterval(window.simInterval);
+
+  window.simInterval = setInterval(() => {
+    day++;
+    value *= 2;
+    simValue.textContent = `Day ${day}: $${value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    simProgress.style.width = `${(day/totalDays)*100}%`;
+    if (day >= totalDays) clearInterval(window.simInterval);
+  }, 250); // adjust speed here (250ms per day)
+}
+</script>
+</body>
+</html>
