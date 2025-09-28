@@ -218,45 +218,40 @@
   </div>
 </div>
 
+<!-- Penny Simulation (only the relevant JS changes) -->
 <script>
-function showDropdown(choice) {
-  document.querySelectorAll('.dropdown').forEach(drop => drop.classList.remove('active'));
-  document.getElementById(choice + '-dropdown').classList.add('active');
-
-  // Run simulation only for penny
-  if (choice === 'penny') startSimulation();
-}
-
-function toggleTax(event, choice) {
-  event.stopPropagation();
-  const taxBox = document.getElementById(choice + '-tax');
-  taxBox.classList.toggle('active');
-}
-
-// Simulation for $0.01 doubling
-function startSimulation() {
+// Penny simulation using exponential/logarithmic animation
+function startPennySimulation() {
   const simPanel = document.getElementById('penny-sim');
   simPanel.classList.add('active');
+  const counter = document.getElementById('penny-counter');
+  const progress = document.getElementById('penny-progress');
+  const final = document.getElementById('penny-final');
 
-  const simValue = document.getElementById('sim-value');
-  const simProgress = document.getElementById('sim-progress');
-  let value = 0.01;
   let day = 0;
   const totalDays = 30;
+  const startValue = 0.01;
 
-  simValue.textContent = `Day 0: $0.01`;
-  simProgress.style.width = `0%`;
+  counter.textContent = `Day 0: $0.01`;
+  progress.style.width = '0%';
+  final.textContent = '';
 
-  // Clear any existing intervals
-  if (window.simInterval) clearInterval(window.simInterval);
+  if(window.pennyInterval) clearInterval(window.pennyInterval);
 
-  window.simInterval = setInterval(() => {
+  window.pennyInterval = setInterval(() => {
     day++;
-    value *= 2;
-    simValue.textContent = `Day ${day}: $${value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-    simProgress.style.width = `${(day/totalDays)*100}%`;
-    if (day >= totalDays) clearInterval(window.simInterval);
-  }, 250); // adjust speed here (250ms per day)
+    // Use exponential growth formula
+    const value = startValue * Math.pow(2, day);
+
+    counter.textContent = `Day ${day}: $${value.toLocaleString(undefined, {minimumFractionDigits:2,maximumFractionDigits:2})}`;
+    // Update progress using logarithmic scale (visual emphasis on later days)
+    progress.style.width = `${Math.log(day+1)/Math.log(totalDays+1)*100}%`;
+
+    if(day >= totalDays){
+      final.textContent = `Final Amount: $${value.toLocaleString(undefined, {minimumFractionDigits:2,maximumFractionDigits:2})}`;
+      clearInterval(window.pennyInterval);
+    }
+  }, 200); // adjust speed here
 }
 </script>
 </body>
