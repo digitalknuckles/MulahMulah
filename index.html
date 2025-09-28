@@ -5,159 +5,51 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Million or Penny?</title>
 <style>
-  :root {
-    --bg: #0f172a;
-    --panel: #1e293b;
-    --accent: #38bdf8;
-    --accent2: #a78bfa;
-    --text: #f1f5f9;
-    --muted: #94a3b8;
-  }
-
-  body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    display: flex;
-    height: 100vh;
-  }
-
-  .choice-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    transition: flex 0.5s ease;
-    overflow: hidden;
-  }
-
-  .choice-container:hover {
-    flex: 1.2;
-  }
-
-  .choice {
-    text-align: center;
-    padding: 2rem;
-    max-width: 500px;
-    transition: transform 0.3s ease;
-  }
-
-  .choice h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .choice p {
-    font-size: 1rem;
-    color: var(--muted);
-  }
-
-  .left {
-    background: linear-gradient(135deg, #1e293b, #334155);
-    border-right: 2px solid var(--bg);
-  }
-
-  .right {
-    background: linear-gradient(135deg, #0ea5e9, #6366f1);
-  }
-
-  .dropdown {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--panel);
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.6s ease, padding 0.6s ease;
-    padding: 0 2rem;
-  }
-
-  .dropdown.active {
-    max-height: 700px;
-    padding: 2rem;
-  }
-
-  .dropdown h2 {
-    margin-top: 0;
-    color: var(--accent);
-  }
-
-  .dropdown p {
-    line-height: 1.6;
-  }
-
-  .tax-toggle {
-    margin-top: 1rem;
-    background: var(--accent2);
-    border: none;
-    padding: 0.75rem 1.25rem;
-    border-radius: 8px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-
-  .tax-toggle:hover {
-    background: #7c3aed;
-  }
-
-  .tax-info {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: #111827;
-    border-radius: 8px;
-    display: none;
-  }
-
-  .tax-info.active {
-    display: block;
-    animation: fadeIn 0.4s ease;
-  }
-
-  .simulation {
-    margin-top: 1rem;
-    background: #111827;
-    padding: 1rem;
-    border-radius: 8px;
-    display: none;
-  }
-
-  .simulation.active {
-    display: block;
-    animation: fadeIn 0.4s ease;
-  }
-
-  .progress-bar {
-    height: 20px;
-    background: var(--muted);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 0.5rem;
-  }
-
-  .progress-bar-inner {
-    height: 100%;
-    width: 0%;
-    background: var(--accent);
-    border-radius: 10px;
-    transition: width 0.3s linear;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media(max-width: 768px) {
-    body { flex-direction: column; }
-    .choice-container { height: 50%; border: none; }
-    .left { border-bottom: 2px solid var(--bg); }
-  }
+:root {
+  --bg: #0f172a;
+  --panel: #1e293b;
+  --accent: #38bdf8;
+  --accent2: #a78bfa;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+}
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  height: 100vh;
+}
+.choice-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: flex 0.5s ease;
+  overflow: hidden;
+}
+.choice-container:hover { flex: 1.2; }
+.choice { text-align: center; padding: 2rem; max-width: 500px; transition: transform 0.3s ease; }
+.choice h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+.choice p { font-size: 1rem; color: var(--muted); }
+.left { background: linear-gradient(135deg, #1e293b, #334155); border-right: 2px solid var(--bg); }
+.right { background: linear-gradient(135deg, #0ea5e9, #6366f1); }
+.dropdown { position: absolute; bottom: 0; left: 0; right: 0; background: var(--panel); max-height: 0; overflow: hidden; transition: max-height 0.6s ease, padding 0.6s ease; padding: 0 2rem; }
+.dropdown.active { max-height: 800px; padding: 2rem; }
+.dropdown h2 { margin-top: 0; color: var(--accent); }
+.dropdown p { line-height:1.6; }
+.tax-toggle { margin-top: 1rem; background: var(--accent2); border: none; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: bold; color: white; cursor: pointer; transition: background 0.3s ease; }
+.tax-toggle:hover { background: #7c3aed; }
+.tax-info, .simulation { margin-top: 1rem; padding: 1rem; background: #111827; border-radius: 8px; display: none; }
+.tax-info.active, .simulation.active { display:block; animation: fadeIn 0.4s ease; }
+.progress-bar { height: 20px; background: var(--muted); border-radius: 10px; overflow: hidden; margin-top: 0.5rem; }
+.progress-bar-inner { height: 100%; width: 0%; background: var(--accent); border-radius: 10px; transition: width 0.3s linear; }
+.final-amount { font-weight:bold; font-size:1.2rem; margin-top:0.5rem; color: #a3f2ff; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+@media(max-width:768px) { body { flex-direction: column; } .choice-container { height: 50%; border:none; } .left { border-bottom: 2px solid var(--bg); } }
 </style>
 </head>
 <body>
@@ -170,17 +62,17 @@
   </div>
   <div class="dropdown" id="million-dropdown">
     <h2>You Chose $1,000,000 Today</h2>
-    <p>
-      Choosing $1,000,000 gives you immediate access to a life-changing sum.
-      Over 30 days, the doubling penny grows far beyond $1,000,000…
-    </p>
-    <button class="tax-toggle" onclick="toggleTax(event, 'million')">Show Tax Implications</button>
+    <p>Immediate access to life-changing funds.</p>
+    <button class="tax-toggle" onclick="toggleTax(event,'million')">Show Tax Implications</button>
     <div class="tax-info" id="million-tax">
       <h3>Tax Implications</h3>
-      <p>
-        Treated as <strong>earned income</strong> (37% top federal bracket).  
-        Taxes: $370,000. Net: $630,000.
-      </p>
+      <p>Earned income (37% top US federal tax). Taxes: $370,000. Net: $630,000.</p>
+    </div>
+    <div class="simulation" id="million-sim">
+      <h3>Growth Simulation</h3>
+      <p id="million-counter">Amount: $0</p>
+      <div class="progress-bar"><div class="progress-bar-inner" id="million-progress"></div></div>
+      <div class="final-amount" id="million-final"></div>
     </div>
   </div>
 </div>
@@ -193,35 +85,72 @@
   </div>
   <div class="dropdown" id="penny-dropdown">
     <h2>You Chose the Doubling Penny</h2>
-    <p>
-      A single penny doubles each day. By day 10, it’s only $5.12.  
-      By day 20, $5,242.88. By day 30, $10,737,418.24.
-    </p>
-
-    <button class="tax-toggle" onclick="toggleTax(event, 'penny')">Show Tax Implications</button>
+    <p>1 cent doubles each day. Exponential growth illustrates compounding power.</p>
+    <button class="tax-toggle" onclick="toggleTax(event,'penny')">Show Tax Implications</button>
     <div class="tax-info" id="penny-tax">
       <h3>Tax Implications</h3>
-      <p>
-        Short-term gains (37%): $3,971,844. Net: $6,765,574.  
-        Long-term gains (20%): $2,147,483. Net: $8,589,935.
-      </p>
+      <p>Short-term gains (37%) net: $6,765,574. Long-term gains (20%) net: $8,589,935.</p>
     </div>
-
-    <!-- Simulation Panel -->
     <div class="simulation" id="penny-sim">
       <h3>Day-by-Day Growth Simulation</h3>
-      <p id="sim-value">Day 0: $0.01</p>
-      <div class="progress-bar">
-        <div class="progress-bar-inner" id="sim-progress"></div>
-      </div>
+      <p id="penny-counter">Day 0: $0.01</p>
+      <div class="progress-bar"><div class="progress-bar-inner" id="penny-progress"></div></div>
+      <div class="final-amount" id="penny-final"></div>
     </div>
   </div>
 </div>
 
-<!-- Penny Simulation (only the relevant JS changes) -->
 <script>
-// Penny simulation using exponential/logarithmic animation
-function startPennySimulation() {
+// Make all functions global so onclick works
+window.showDropdown = function(choice){
+  document.querySelectorAll('.dropdown').forEach(drop => drop.classList.remove('active'));
+  document.getElementById(choice+'-dropdown').classList.add('active');
+
+  if(choice==='penny') startPennySimulation();
+  if(choice==='million') startMillionSimulation();
+}
+
+window.toggleTax = function(event, choice){
+  event.stopPropagation();
+  const taxBox = document.getElementById(choice+'-tax');
+  taxBox.classList.toggle('active');
+}
+
+// Million simulation
+function startMillionSimulation(){
+  const simPanel = document.getElementById('million-sim');
+  simPanel.classList.add('active');
+  const counter = document.getElementById('million-counter');
+  const progress = document.getElementById('million-progress');
+  const final = document.getElementById('million-final');
+
+  let total = 1000000;
+  let current = 0;
+  let steps = 100;
+  let stepAmount = total/steps;
+  let step = 0;
+
+  counter.textContent = 'Amount: $0';
+  progress.style.width = '0%';
+  final.textContent = '';
+
+  if(window.millionInterval) clearInterval(window.millionInterval);
+
+  window.millionInterval = setInterval(()=>{
+    step++;
+    current+=stepAmount;
+    counter.textContent=`Amount: $${Math.floor(current).toLocaleString()}`;
+    progress.style.width=`${(step/steps)*100}%`;
+    if(step>=steps){
+      counter.textContent=`Amount: $${total.toLocaleString()}`;
+      final.textContent=`Final Amount: $${total.toLocaleString()}`;
+      clearInterval(window.millionInterval);
+    }
+  },50);
+}
+
+// Penny simulation with logarithmic progress
+function startPennySimulation(){
   const simPanel = document.getElementById('penny-sim');
   simPanel.classList.add('active');
   const counter = document.getElementById('penny-counter');
@@ -238,20 +167,17 @@ function startPennySimulation() {
 
   if(window.pennyInterval) clearInterval(window.pennyInterval);
 
-  window.pennyInterval = setInterval(() => {
+  window.pennyInterval = setInterval(()=>{
     day++;
-    // Use exponential growth formula
     const value = startValue * Math.pow(2, day);
-
-    counter.textContent = `Day ${day}: $${value.toLocaleString(undefined, {minimumFractionDigits:2,maximumFractionDigits:2})}`;
-    // Update progress using logarithmic scale (visual emphasis on later days)
+    counter.textContent = `Day ${day}: $${value.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}`;
     progress.style.width = `${Math.log(day+1)/Math.log(totalDays+1)*100}%`;
 
-    if(day >= totalDays){
-      final.textContent = `Final Amount: $${value.toLocaleString(undefined, {minimumFractionDigits:2,maximumFractionDigits:2})}`;
+    if(day>=totalDays){
+      final.textContent = `Final Amount: $${value.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}`;
       clearInterval(window.pennyInterval);
     }
-  }, 200); // adjust speed here
+  },200);
 }
 </script>
 </body>
