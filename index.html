@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Crypto Stack Challenge – NFT Glow</title>
+
 <style>
 :root {
   --bg: #01020a;
@@ -11,118 +12,215 @@
   --text: #e5e7eb;
   --muted: #94a3b8;
   --accent: #4ade80;
-  --glow: rgba(255,255,255,0.2);
+  --glow: rgba(255, 255, 255, 0.2);
   --token: #ffffff;
 }
+
 body {
-  margin:0; font-family:"Inter",sans-serif;
-  background: var(--bg); color: var(--text);
-  display:flex; justify-content:center; padding:1rem; overflow-x:hidden;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  overflow-x: hidden;
 }
+
 .nft-card {
-  width:100%; max-width:680px; margin:2rem auto; padding:1.5rem;
-  background:var(--panel); border-radius:24px; border:2px solid var(--token);
-  box-shadow:0 0 20px rgba(0,0,0,0.6),0 0 10px var(--token), inset 0 0 8px var(--token);
-  backdrop-filter: blur(16px); animation:neonPulse 3s infinite alternate;
+  width: 100%;
+  max-width: 680px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: var(--panel);
+  border-radius: 24px;
+  border: 2px solid var(--token);
+  box-shadow: 0 0 20px rgba(0,0,0,0.6), 0 0 10px var(--token), inset 0 0 8px var(--token);
+  backdrop-filter: blur(16px);
+  animation: neonPulse 3s infinite alternate;
 }
+
 @keyframes neonPulse {
-  from {box-shadow:0 0 12px var(--token), inset 0 0 4px var(--token);}
-  to {box-shadow:0 0 30px var(--token), inset 0 0 15px var(--token);}
+  from { box-shadow: 0 0 12px var(--token), inset 0 0 4px var(--token); }
+  to { box-shadow: 0 0 30px var(--token), inset 0 0 15px var(--token); }
 }
-.wrapper{display:flex; flex-direction:column; gap:1.2rem;}
-.selector{text-align:center;}
-.selector select{
-  width:100%; max-width:300px; padding:.9rem; border-radius:12px;
-  background:#0f172a; color:var(--text); border:1px solid rgba(255,255,255,0.1);
-  font-size:1rem;
+
+.wrapper { display: flex; flex-direction: column; gap: 1.2rem; }
+
+.selector {
+  text-align: center;
 }
-.choice-card{
-  background:var(--panel); border-radius:18px; padding:1.5rem; backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,0.12); cursor:pointer; transition:transform .2s ease,box-shadow .2s ease;
+.selector select {
+  width: 100%;
+  max-width: 300px;
+  padding: .9rem;
+  border-radius: 12px;
+  background: #0f172a;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.1);
+  font-size: 1rem;
 }
-.choice-card:hover{transform:scale(1.03); box-shadow:0 0 30px var(--glow);}
-.choice-card h1{font-size:1.6rem; color:var(--token); margin-bottom:.4rem; text-shadow:0 0 10px var(--glow);}
-.choice-card p{color:var(--muted); margin:0;}
-.dropdown{max-height:0; overflow:hidden; padding:0; transition:max-height .6s ease, padding .6s ease;}
-.dropdown.active{max-height:1000px; padding:1rem 0 .8rem;}
-.btn{margin-top:1rem; background:var(--token); color:#000; padding:.7rem 1.3rem; border-radius:10px; font-weight:bold; border:none; cursor:pointer; box-shadow:0 0 12px var(--token); transition:opacity .2s ease;}
-.btn:hover{opacity:.85;}
-.info-box{background:rgba(255,255,255,0.07); margin-top:1rem; padding:1rem; border-radius:10px; display:none;}
-.info-box.active{display:block;}
-.progress-bar{height:16px; background:rgba(255,255,255,0.14); border-radius:10px; overflow:hidden; margin-top:.4rem;}
-.progress-bar-inner{height:100%; width:0%; background:var(--accent); transition:width .25s linear;}
-.final{margin-top:.5rem; font-weight:bold; color:var(--accent);}
-.metric{margin-top:.6rem; font-size:1rem; color:var(--text);}
-.metric span{font-weight:bold; color:var(--accent);}
-#confetti-canvas{position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;}
+
+.choice-card {
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 1.5rem;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.12);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.choice-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 30px var(--glow);
+}
+.choice-card h1 {
+  font-size: 1.6rem;
+  color: var(--token);
+  margin-bottom: .4rem;
+  text-shadow: 0 0 10px var(--glow);
+}
+.choice-card p { color: var(--muted); margin: 0; }
+
+.dropdown {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0;
+  transition: max-height .6s ease, padding .6s ease;
+}
+.dropdown.active { max-height: 1000px; padding: 1rem 0 .8rem; }
+
+.btn {
+  margin-top: 1rem;
+  background: var(--token);
+  color: #000;
+  padding: .7rem 1.3rem;
+  border-radius: 10px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 12px var(--token);
+  transition: opacity .2s ease;
+}
+.btn:hover { opacity: .85; }
+
+.info-box {
+  background: rgba(255,255,255,0.07);
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  display: none;
+}
+.info-box.active { display: block; }
+
+.progress-bar {
+  height: 16px;
+  background: rgba(255,255,255,0.14);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: .4rem;
+}
+.progress-bar-inner {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width .25s linear;
+}
+
+.final {
+  margin-top: .5rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+.metric {
+  margin-top: .6rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+.metric span { font-weight: bold; color: var(--accent); }
+
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
 </style>
 </head>
 <body>
 <canvas id="confetti-canvas"></canvas>
+
 <div class="nft-card">
-  <div class="wrapper">
-    <div class="selector">
-      <h2>Select Your Crypto</h2>
-      <select id="cryptoSelect" onchange="onCryptoChange()">
-        <option value="BTC">Bitcoin (BTC)</option>
-        <option value="ETH">Ethereum (ETH)</option>
-        <option value="SOL">Solana (SOL)</option>
-        <option value="BNB">Binance Coin (BNB)</option>
-        <option value="ADA">Cardano (ADA)</option>
-        <option value="DOGE">Dogecoin (DOGE)</option>
-        <option value="AVAX">Avalanche (AVAX)</option>
-        <option value="MATIC">Polygon (MATIC)</option>
-      </select>
-    </div>
+<div class="wrapper">
 
-    <!-- $1M Option -->
-    <div class="choice-card" onclick="showPanel('million')">
-      <h1 id="optA-title">1,000,000 USD Worth of BTC</h1>
-      <p id="optA-sub">Instant base-asset allocation.</p>
-      <div class="dropdown" id="million-panel">
-        <h2 id="optA-headline"></h2>
-        <p id="optA-desc"></p>
-        <button class="btn" onclick="toggleTax(event,'million')">Show Notes</button>
-        <div class="info-box" id="million-tax">
-          <h3>Considerations</h3>
-          <p id="optA-tax"></p>
-        </div>
-        <div class="info-box" id="million-sim">
-          <h3>Simulating Allocation…</h3>
-          <p id="million-counter"></p>
-          <div class="progress-bar"><div class="progress-bar-inner" id="million-progress"></div></div>
-          <p class="final" id="million-final"></p>
-          <p class="metric" id="million-metric"></p>
-        </div>
+  <div class="selector">
+    <h2>Select Your Crypto</h2>
+    <select id="cryptoSelect" onchange="onCryptoChange()">
+      <option value="BTC">Bitcoin (BTC)</option>
+      <option value="ETH">Ethereum (ETH)</option>
+      <option value="SOL">Solana (SOL)</option>
+      <option value="BNB">Binance Coin (BNB)</option>
+      <option value="ADA">Cardano (ADA)</option>
+      <option value="DOGE">Dogecoin (DOGE)</option>
+      <option value="AVAX">Avalanche (AVAX)</option>
+      <option value="MATIC">Polygon (MATIC)</option>
+    </select>
+  </div>
+
+  <div class="choice-card" onclick="showPanel('million')">
+    <h1 id="optA-title">1,000,000 USD Worth of BTC</h1>
+    <p id="optA-sub">Instant base-asset allocation.</p>
+
+    <div class="dropdown" id="million-panel">
+      <h2 id="optA-headline"></h2>
+      <p id="optA-desc"></p>
+
+      <button class="btn" onclick="toggleTax(event, 'million')">Show Notes</button>
+      <div class="info-box" id="million-tax">
+        <h3>Considerations</h3>
+        <p id="optA-tax"></p>
       </div>
-    </div>
 
-    <!-- 0.01 doubling -->
-    <div class="choice-card" onclick="showPanel('double')">
-      <h1 id="optB-title">0.01 BTC → Doubles 30 Days</h1>
-      <p id="optB-sub">Exponential growth simulation.</p>
-      <div class="dropdown" id="double-panel">
-        <h2 id="optB-headline"></h2>
-        <p id="optB-desc"></p>
-        <button class="btn" onclick="toggleTax(event,'double')">Show Notes</button>
-        <div class="info-box" id="double-tax">
-          <h3>Model Notes</h3>
-          <p id="optB-tax"></p>
-        </div>
-        <div class="info-box" id="double-sim">
-          <h3>30-Day Doubling Simulation</h3>
-          <p id="double-counter"></p>
-          <div class="progress-bar"><div class="progress-bar-inner" id="double-progress"></div></div>
-          <p class="final" id="double-final"></p>
-          <p class="metric" id="double-metric"></p>
-        </div>
+      <div class="info-box" id="million-sim">
+        <h3>Simulating Allocation…</h3>
+        <p id="million-counter"></p>
+        <div class="progress-bar"><div class="progress-bar-inner" id="million-progress"></div></div>
+        <p class="final" id="million-final"></p>
+        <p class="metric" id="million-metric"></p>
       </div>
     </div>
   </div>
+
+  <div class="choice-card" onclick="showPanel('double')">
+    <h1 id="optB-title">0.01 BTC → Doubles 30 Days</h1>
+    <p id="optB-sub">Exponential growth simulation.</p>
+
+    <div class="dropdown" id="double-panel">
+      <h2 id="optB-headline"></h2>
+      <p id="optB-desc"></p>
+
+      <button class="btn" onclick="toggleTax(event, 'double')">Show Notes</button>
+      <div class="info-box" id="double-tax">
+        <h3>Model Notes</h3>
+        <p id="optB-tax"></p>
+      </div>
+
+      <div class="info-box" id="double-sim">
+        <h3>30-Day Doubling Simulation</h3>
+        <p id="double-counter"></p>
+        <div class="progress-bar"><div class="progress-bar-inner" id="double-progress"></div></div>
+        <p class="final" id="double-final"></p>
+        <p class="metric" id="double-metric"></p>
+      </div>
+    </div>
+  </div>
+
+</div>
 </div>
 
 <script>
-/* ----------------- Crypto Data ----------------- */
+/* ================= Crypto Themes ================= */
 const cryptoThemes = {
   BTC:{id:"bitcoin", color:"#f7931a", symbol:"₿", name:"Bitcoin"},
   ETH:{id:"ethereum", color:"#627eea", symbol:"Ξ", name:"Ethereum"},
@@ -131,73 +229,80 @@ const cryptoThemes = {
   ADA:{id:"cardano", color:"#3cc8c8", symbol:"₳", name:"Cardano"},
   DOGE:{id:"dogecoin", color:"#c2a633", symbol:"Ð", name:"Dogecoin"},
   AVAX:{id:"avalanche-2", color:"#e84142", symbol:"Λ", name:"Avalanche"},
-  MATIC:{id:"matic-network", color:"#8247e5", symbol:"◆", name:"Polygon"}
+  MATIC:{id:"matic-network", color:"#8247e5", symbol:"◆", name:"Polygon"},
 };
+
+const fallbackPrices = { BTC:30000, ETH:3500, SOL:25, BNB:400, ADA:0.45, DOGE:0.065, AVAX:20, MATIC:1 };
 let currentPrice = null;
 
-/* ----------------- Fetch Price ----------------- */
-async function fetchPrice(id){
-  try{
-    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`);
-    const data = await res.json();
-    return data[id].usd;
-  }catch(e){ console.error(e); return null; }
+/* ================= Fetch Price with Fallback ================= */
+async function fetchPrice(cryptoId){
+  try {
+    const resp = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoId}&vs_currencies=usd`);
+    const data = await resp.json();
+    return data[cryptoId].usd;
+  } catch(e){ return null; }
 }
 
-/* ----------------- On Crypto Change ----------------- */
+/* ================= On Crypto Change ================= */
 async function onCryptoChange(){
   const code = document.getElementById("cryptoSelect").value;
   const theme = cryptoThemes[code];
-  document.documentElement.style.setProperty("--token",theme.color);
 
-  document.getElementById("optA-title").innerText=`1,000,000 USD Worth of ${theme.name} (${code})`;
-  document.getElementById("optB-title").innerText=`0.01 ${code} → Doubles 30 Days`;
-  document.getElementById("optA-headline").innerText=`You Chose: $1,000,000 Worth of ${theme.name}`;
-  document.getElementById("optA-desc").innerText=`Converting USD into ${theme.name} at current market price.`;
-  document.getElementById("optB-headline").innerText=`You Chose: 0.01 ${code} Doubling`;
-  document.getElementById("optB-desc").innerText=`Starting with 0.01 ${code}, simulating daily doubling for 30 days.`;
-  document.getElementById("optA-tax").innerText=`Receiving or converting into ${theme.name} may be taxable or incur fees.`;
-  document.getElementById("optB-tax").innerText=`Doubling is theoretical; real-world compounding depends on staking, yield, or trading.`;
+  document.documentElement.style.setProperty("--token", theme.color);
 
-  currentPrice = await fetchPrice(theme.id);
-  if(!currentPrice) alert("Price fetch error for " + theme.name);
+  document.getElementById("optA-title").innerText = `1,000,000 USD Worth of ${theme.name} (${code})`;
+  document.getElementById("optB-title").innerText = `0.01 ${code} → Doubles 30 Days`;
+
+  document.getElementById("optA-headline").innerText = `You Chose: $1,000,000 Worth of ${theme.name}`;
+  document.getElementById("optA-desc").innerText = `Converting USD into ${theme.name} at current market price.`;
+
+  document.getElementById("optB-headline").innerText = `You Chose: 0.01 ${code} Doubling`;
+  document.getElementById("optB-desc").innerText = `Starting with 0.01 ${code}, simulating daily doubling for 30 days.`;
+
+  document.getElementById("optA-tax").innerText = `Receiving or converting into ${theme.name} may be taxable or incur fees depending on your jurisdiction.`;
+  document.getElementById("optB-tax").innerText = `Doubling is a theoretical model; real-world compounding depends on staking, yield, or trading.`;
+
+  let price = await fetchPrice(theme.id);
+  currentPrice = price || fallbackPrices[code];
 
   const nftCard = document.querySelector(".nft-card");
-  nftCard.style.boxShadow = `0 0 20px ${theme.color},0 0 10px ${theme.color}, inset 0 0 8px ${theme.color}`;
+  nftCard.style.boxShadow = `0 0 20px ${theme.color}, 0 0 10px ${theme.color}, inset 0 0 8px ${theme.color}`;
 
-  if(currentPrice){
-    const tokens = 1_000_000/currentPrice;
-    document.getElementById("million-metric").innerHTML=`~ <span>${tokens.toFixed(2)} ${code}</span> (at $${currentPrice.toLocaleString()})`;
-    const finalTokens = 0.01 * Math.pow(2,30);
-    const finalUSD = finalTokens*currentPrice;
-    document.getElementById("double-metric").innerHTML=`~ <span>${finalTokens.toFixed(6)} ${code}</span> ≈ <span>$${finalUSD.toLocaleString(undefined,{maximumFractionDigits:2})}</span>`;
-  }
+  // Precompute metrics
+  const tokens = 1_000_000 / currentPrice;
+  document.getElementById("million-metric").innerHTML = `~ <span>${tokens.toFixed(2)} ${code}</span> (at $${currentPrice.toLocaleString()})`;
+  const finalTokens = 0.01 * Math.pow(2,30);
+  const finalUSD = finalTokens * currentPrice;
+  document.getElementById("double-metric").innerHTML = `~ <span>${finalTokens.toFixed(6)} ${code}</span> ≈ <span>$${finalUSD.toLocaleString(undefined,{maximumFractionDigits:2})}</span>`;
 }
 
-/* ----------------- Panel Logic ----------------- */
+/* ================= Panels ================= */
 function showPanel(c){
   document.querySelectorAll(".dropdown").forEach(p=>p.classList.remove("active"));
   document.getElementById(`${c}-panel`).classList.add("active");
   if(c==="million") startMillion();
   if(c==="double") startDouble();
 }
-
 function toggleTax(e,c){ e.stopPropagation(); document.getElementById(`${c}-tax`).classList.toggle("active"); }
 
-/* ----------------- $1M Simulation ----------------- */
+/* ================= $1M Simulation ================= */
 function startMillion(){
   const counter = document.getElementById("million-counter");
   const prog = document.getElementById("million-progress");
   const final = document.getElementById("million-final");
   const metric = document.getElementById("million-metric");
+
   counter.textContent="Simulating conversion…";
-  prog.style.width="0%"; final.textContent="";
+  prog.style.width="0%";
+  final.textContent="";
   if(window.mA) clearInterval(window.mA);
-  let current = 0;
+
+  let current=0;
   window.mA = setInterval(()=>{
     current++;
-    prog.style.width=current+"%";
-    counter.textContent=`Processing… ${current}%`;
+    prog.style.width = current + "%";
+    counter.textContent = `Processing… ${current}%`;
     if(current>=100){
       clearInterval(window.mA);
       final.textContent=`Completed: $1,000,000 → ${metric.textContent}`;
@@ -206,34 +311,41 @@ function startMillion(){
   },25);
 }
 
-/* ----------------- 0.01 Doubling ----------------- */
+/* ================= Doubling Simulation ================= */
 function startDouble(){
   const code = document.getElementById("cryptoSelect").value;
   const counter = document.getElementById("double-counter");
   const prog = document.getElementById("double-progress");
   const final = document.getElementById("double-final");
   const metric = document.getElementById("double-metric");
-  let day = 0; const totalDays = 30; const start = 0.01;
+
+  let day=0, totalDays=30, start=0.01;
   prog.style.width="0%"; final.textContent=""; counter.textContent="";
   if(window.dbl) clearInterval(window.dbl);
+
   window.dbl = setInterval(()=>{
-    const tokens = start*Math.pow(2,day);
-    const usdValue = currentPrice?tokens*currentPrice:0;
+    const tokens = start * Math.pow(2, day);
+    const usdValue = currentPrice * tokens;
+
     counter.textContent=`Day ${day}: ${tokens.toFixed(6)} ${code}`;
-    metric.innerHTML=`≈ <span>${usdValue.toLocaleString(undefined,{maximumFractionDigits:2})} USD</span>`;
-    prog.style.width=((day+1)/totalDays)*100+"%";
+    metric.innerHTML=`≈ <span>$${usdValue.toLocaleString(undefined,{maximumFractionDigits:2})}</span>`;
+    prog.style.width=((day+1)/totalDays)*100 + "%";
+
     if(day>=totalDays){
       final.textContent=`Final: ${tokens.toFixed(6)} ${code} ≈ $${usdValue.toLocaleString()}`;
-      clearInterval(window.dbl); launchConfetti();
+      clearInterval(window.dbl);
+      launchConfetti();
     }
     day++;
   },200);
 }
 
-/* ----------------- Confetti ----------------- */
-const canvas = document.getElementById("confetti-canvas");
-const ctx = canvas.getContext("2d"); canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+/* ================= Confetti ================= */
+const canvas=document.getElementById("confetti-canvas");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
 const confettiParticles=[];
+
 function random(min,max){return Math.random()*(max-min)+min;}
 function launchConfetti(){
   for(let i=0;i<150;i++){
@@ -245,14 +357,22 @@ function animateConfetti(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   for(let i=0;i<confettiParticles.length;i++){
     let p=confettiParticles[i];
-    p.y+=Math.cos(p.d)+3+p.r/2; p.tilt+=p.tiltAngleIncrement; p.x+=Math.sin(p.tilt)*2;
-    ctx.beginPath(); ctx.lineWidth=p.r; ctx.strokeStyle=p.color;
-    ctx.moveTo(p.x+p.tilt+p.r/2,p.y); ctx.lineTo(p.x+p.tilt,p.y+p.tilt+p.r/2); ctx.stroke();
+    p.y+=Math.cos(p.d)+3+p.r/2;
+    p.tilt+=p.tiltAngleIncrement;
+    p.x+=Math.sin(p.tilt)*2;
+    ctx.beginPath();
+    ctx.lineWidth=p.r;
+    ctx.strokeStyle=p.color;
+    ctx.moveTo(p.x+p.tilt+p.r/2,p.y);
+    ctx.lineTo(p.x+p.tilt,p.y+p.tilt+p.r/2);
+    ctx.stroke();
     if(p.y>canvas.height+10){ confettiParticles.splice(i,1); i--; }
   }
   if(confettiParticles.length>0) requestAnimationFrame(animateConfetti);
 }
+
 window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+
 onCryptoChange();
 </script>
 </body>
