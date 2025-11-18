@@ -236,12 +236,10 @@ const fallbackPrices = { BTC:30000, ETH:3500, SOL:25, BNB:400, ADA:0.45, DOGE:0.
 let currentPrice = null;
 
 /* ================= Fetch Price with Fallback ================= */
-async function fetchPrice(cryptoId){
-  try {
-    const resp = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoId}&vs_currencies=usd`);
-    const data = await resp.json();
-    return data[cryptoId].usd;
-  } catch(e){ return null; }
+async function fetchPrice(cryptoId) {
+  // Always use fallback, ignore live fetch
+  const codeMap = { bitcoin:"BTC", ethereum:"ETH", "solana":"SOL", "binancecoin":"BNB", "cardano":"ADA", "dogecoin":"DOGE", "avalanche-2":"AVAX", "matic-network":"MATIC" };
+  return fallbackPrices[codeMap[cryptoId]] || 1;
 }
 
 /* ================= On Crypto Change ================= */
