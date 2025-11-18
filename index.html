@@ -234,33 +234,40 @@ body {
 </div>
 
 <script>
-/* ====================== Crypto Themes & Fallback Prices ====================== */
+/* ====================== Crypto Data ====================== */
 const cryptoThemes = {
-  BTC: {id:"bitcoin", color:"#f7931a", symbol:"₿", name:"Bitcoin", fallback:30000},
-  ETH: {id:"ethereum", color:"#627eea", symbol:"Ξ", name:"Ethereum", fallback:3500},
-  SOL: {id:"solana", color:"#7fdbff", symbol:"◎", name:"Solana", fallback:25},
-  BNB: {id:"binancecoin", color:"#f3ba2f", symbol:"Ⓑ", name:"Binance Coin", fallback:400},
-  ADA: {id:"cardano", color:"#3cc8c8", symbol:"₳", name:"Cardano", fallback:0.45},
-  DOGE:{id:"dogecoin", color:"#c2a633", symbol:"Ð", name:"Dogecoin", fallback:0.065},
-  AVAX:{id:"avalanche-2", color:"#e84142", symbol:"Λ", name:"Avalanche", fallback:20},
-  MATIC:{id:"matic-network", color:"#8247e5", symbol:"◆", name:"Polygon", fallback:1},
+  BTC: {id:"bitcoin", color:"#f7931a", symbol:"₿", name:"Bitcoin"},
+  ETH: {id:"ethereum", color:"#627eea", symbol:"Ξ", name:"Ethereum"},
+  SOL: {id:"solana", color:"#7fdbff", symbol:"◎", name:"Solana"},
+  BNB: {id:"binancecoin", color:"#f3ba2f", symbol:"Ⓑ", name:"Binance Coin"},
+  ADA: {id:"cardano", color:"#3cc8c8", symbol:"₳", name:"Cardano"},
+  DOGE:{id:"dogecoin", color:"#c2a633", symbol:"Ð", name:"Dogecoin"},
+  AVAX:{id:"avalanche-2", color:"#e84142", symbol:"Λ", name:"Avalanche"},
+  MATIC:{id:"matic-network", color:"#8247e5", symbol:"◆", name:"Polygon"},
 };
 
-let currentPrice = 0;
+let currentPrice = null;
+
+/* ====================== Price Fetch ====================== */
+async function fetchPrice(cryptoId) {
+  try {
+    const resp = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${cryptoId}&vs_currencies=usd`);
+    const data = await resp.json();
+    return data[cryptoId].usd;
+  } catch(e) { console.error(e); return null; }
+}
 
 /* ====================== On Crypto Change ====================== */
-function onCryptoChange() {
+async function onCryptoChange() {
   const code = document.getElementById("cryptoSelect").value;
   const theme = cryptoThemes[code];
-  currentPrice = theme.fallback;
-
   document.documentElement.style.setProperty("--token", theme.color);
 
   document.getElementById("optA-title").innerText = `1,000,000 USD Worth of ${theme.name} (${code})`;
   document.getElementById("optB-title").innerText = `0.01 ${code} → Doubles 30 Days`;
 
   document.getElementById("optA-headline").innerText = `You Chose: $1,000,000 Worth of ${theme.name}`;
-  document.getElementById("optA-desc").innerText = `Converting USD into ${theme.name} at static demo price $${currentPrice}.`;
+  document.getElementById("optA-desc").innerText = `Converting USD into ${theme.name} at current market price.`;
 
   document.getElementById("optB-headline").innerText = `You Chose: 0.01 ${code} Doubling`;
   document.getElementById("optB-desc").innerText = `Starting with 0.01 ${code}, simulating daily doubling for 30 days.`;
@@ -268,15 +275,20 @@ function onCryptoChange() {
   document.getElementById("optA-tax").innerText = `Receiving or converting into ${theme.name} may be taxable or incur fees depending on your jurisdiction.`;
   document.getElementById("optB-tax").innerText = `Doubling is a theoretical model; real-world compounding depends on staking, yield, or trading.`;
 
+  currentPrice = await fetchPrice(theme.id);
+  if(!currentPrice) alert("Price fetch error for " + theme.name);
+
   const nftCard = document.querySelector(".nft-card");
   nftCard.style.boxShadow = `0 0 20px ${theme.color}, 0 0 10px ${theme.color}, inset 0 0 8px ${theme.color}`;
 
   // Precompute metric
-  const tokens = 1_000_000 / currentPrice;
-  document.getElementById("million-metric").innerHTML = `~ <span>${tokens.toFixed(2)} ${code}</span>`;
-  const finalTokens = 0.01 * Math.pow(2,30);
-  const finalUSD = finalTokens * currentPrice;
-  document.getElementById("double-metric").innerHTML = `~ <span>${finalTokens.toFixed(6)} ${code}</span> ≈ <span>$${finalUSD.toLocaleString(undefined,{maximumFractionDigits:2})}</span>`;
+  if(currentPrice) {
+    const tokens = 1_000_000 / currentPrice;
+    document.getElementById("million-metric").innerHTML = `~ <span>${tokens.toFixed(2)} ${code}</span> (at $${currentPrice.toLocaleString()})`;
+    const finalTokens = 0.01 * Math.pow(2,30);
+    const finalUSD = finalTokens * currentPrice;
+    document.getElementById("double-metric").innerHTML = `~ <span>${finalTokens.toFixed(6)} ${code}</span> ≈ <span>$${finalUSD.toLocaleString(undefined,{maximumFractionDigits:2})}</span>`;
+  }
 }
 
 /* ====================== Panels ====================== */
@@ -355,6 +367,7 @@ function startDouble(){
     day++;
   }, 200);
 }
+
 /* ====================== CONFETTI ====================== */
 const canvas = document.getElementById("confetti-canvas");
 const ctx = canvas.getContext("2d");
