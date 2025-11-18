@@ -299,6 +299,9 @@ function startMillion(){
   const final = document.getElementById("million-final");
   const metric = document.getElementById("million-metric");
 
+  // MAKE SIMULATION PANEL VISIBLE
+  document.getElementById("million-sim").classList.add("active");
+
   counter.textContent = "Simulating conversion…";
   prog.style.width = "0%";
   final.textContent = "";
@@ -325,6 +328,9 @@ function startDouble(){
   const final = document.getElementById("double-final");
   const metric = document.getElementById("double-metric");
 
+  // MAKE SIMULATION PANEL VISIBLE
+  document.getElementById("double-sim").classList.add("active");
+
   let day = 0;
   const totalDays = 30;
   const start = 0.01;
@@ -337,7 +343,7 @@ function startDouble(){
     const tokens = start * Math.pow(2, day);
     const usdValue = tokens * currentPrice;
 
-    counter.textContent = `Day ${day}: ${tokens.toFixed(6)} ${code}`;
+    counter.textContent = `Day ${day + 1}: ${tokens.toFixed(6)} ${code}`;
     metric.innerHTML = `≈ <span>$${usdValue.toLocaleString(undefined,{maximumFractionDigits:2})}</span>`;
     prog.style.width = ((day + 1) / totalDays) * 100 + "%";
 
@@ -349,7 +355,6 @@ function startDouble(){
     day++;
   }, 200);
 }
-
 /* ====================== CONFETTI ====================== */
 const canvas = document.getElementById("confetti-canvas");
 const ctx = canvas.getContext("2d");
