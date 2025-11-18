@@ -285,7 +285,7 @@ async function onCryptoChange() {
   if(currentPrice) {
     const tokens = 1_000_000 / currentPrice;
     document.getElementById("million-metric").innerHTML = `~ <span>${tokens.toFixed(2)} ${code}</span> (at $${currentPrice.toLocaleString()})`;
-    const finalTokens = 0.01 * Math.pow(2,30);
+    const finalTokens = 0.0001 * Math.pow(2,30);
     const finalUSD = finalTokens * currentPrice;
     document.getElementById("double-metric").innerHTML = `~ <span>${finalTokens.toFixed(6)} ${code}</span> ≈ <span>$${finalUSD.toLocaleString(undefined,{maximumFractionDigits:2})}</span>`;
   }
@@ -345,7 +345,7 @@ function startDouble(){
 
   let day = 0;
   const totalDays = 30;
-  const start = 0.01;
+  const start = 0.0001;
   prog.style.width = "0%";
   final.textContent = "";
   counter.textContent = "";
