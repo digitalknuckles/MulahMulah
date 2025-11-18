@@ -264,13 +264,13 @@ async function onCryptoChange() {
   document.documentElement.style.setProperty("--token", theme.color);
 
   document.getElementById("optA-title").innerText = `1,000,000 USD Worth of ${theme.name} (${code})`;
-  document.getElementById("optB-title").innerText = `0.01 ${code} → Doubles 30 Days`;
+  document.getElementById("optB-title").innerText = `0.0001 ${code} → Doubles 30 Days`;
 
   document.getElementById("optA-headline").innerText = `You Chose: $1,000,000 Worth of ${theme.name}`;
   document.getElementById("optA-desc").innerText = `Converting USD into ${theme.name} at current market price.`;
 
-  document.getElementById("optB-headline").innerText = `You Chose: 0.01 ${code} Doubling`;
-  document.getElementById("optB-desc").innerText = `Starting with 0.01 ${code}, simulating daily doubling for 30 days.`;
+  document.getElementById("optB-headline").innerText = `You Chose: 0.0001 ${code} Doubling`;
+  document.getElementById("optB-desc").innerText = `Starting with 0.0001 ${code}, simulating daily doubling for 30 days.`;
 
   document.getElementById("optA-tax").innerText = `Receiving or converting into ${theme.name} may be taxable or incur fees depending on your jurisdiction.`;
   document.getElementById("optB-tax").innerText = `Doubling is a theoretical model; real-world compounding depends on staking, yield, or trading.`;
